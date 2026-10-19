@@ -1,7 +1,7 @@
 # GitHub repositories. Leave `url` empty until the repo exists.
-- name: sentinel-website
-  description: Source of this website — reports, meeting minutes and research notes.
-  url: ""
+- name: sentinel
+  description: Source of this website — reports, meeting reports and the meeting scheduler.
+  url: "https://github.com/ilaydabozan6171/sentinel"
 
 - name: sentinel-backend
   description: Data pipeline, peer-group models, anomaly detectors, risk scoring and the API.

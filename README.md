@@ -90,6 +90,8 @@ Notlar:
 4. Repo → **Settings → Pages** → Source: **Deploy from a branch**, Branch: **main**, klasör: **/ (root)** → Save.
 5. 1-2 dakika sonra site yayında olur. Formdaki "URL of the Project Web Page" alanına bu adresi yazın.
 
+> Şu anki site İlayda'nın hesabında yayında: repo <https://github.com/ilaydabozan6171/sentinel>, adres <https://ilaydabozan6171.github.io/sentinel/>. Ekip arkadaşlarının dosya yükleyebilmesi için repo → **Settings → Collaborators → Add people** ile eklenmeleri gerekir.
+
 ## Bilgisayarda önizleme (isteğe bağlı)
 
 ```bash

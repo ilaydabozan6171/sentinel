@@ -37,8 +37,8 @@ scheduler:
 # Address of the published site.
 #   Organization site (repo named <org>.github.io): url: https://<org>.github.io  baseurl: ""
 #   Project site (any other repo name):             url: https://<org>.github.io  baseurl: "/<repo-name>"
-url: ""
-baseurl: ""
+url: "https://ilaydabozan6171.github.io"
+baseurl: "/sentinel"
 
 markdown: kramdown
 kramdown:
