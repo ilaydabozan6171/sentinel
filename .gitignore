@@ -7,3 +7,5 @@ vendor/
 Gemfile.lock
 .DS_Store
 .claude/
+_apps-script/secret.gs
+_apps-script/.clasp.json

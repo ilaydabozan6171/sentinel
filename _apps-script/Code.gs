@@ -8,8 +8,8 @@
  *                           and emails the invitation to the team and any guests
  *
  * Setup steps are in the README (section "Toplantı planlayıcı").
- * The passcode is NOT stored here: set it under Project Settings -> Script Properties
- * with the name PASSCODE.
+ * The passcode is NOT stored in this file. It comes from secret.gs (not in the public repo,
+ * see secret.example.gs) or from Project Settings -> Script Properties -> PASSCODE.
  */
 
 const SETTINGS = {
@@ -39,6 +39,7 @@ const SETTINGS = {
 
   MAX_GUESTS: 10,
   MAX_MEETINGS_PER_DAY: 20,
+  MAX_WRONG_PASSCODES_PER_DAY: 50,
 };
 
 function doGet(e) {
@@ -60,9 +61,16 @@ function doPost(e) {
     return json_({ ok: false, error: 'The request could not be read.' });
   }
 
-  const passcode = PropertiesService.getScriptProperties().getProperty('PASSCODE');
+  const passcode = (typeof SCHEDULER_PASSCODE === 'string' && SCHEDULER_PASSCODE) ||
+    PropertiesService.getScriptProperties().getProperty('PASSCODE');
   if (!passcode) return json_({ ok: false, error: 'The scheduler has no passcode set yet.' });
-  if (String(data.passcode || '') !== passcode) return json_({ ok: false, error: 'Wrong passcode.' });
+  if (tooManyWrongPasscodes_()) {
+    return json_({ ok: false, error: 'Too many wrong passcodes today. Please try again tomorrow.' });
+  }
+  if (String(data.passcode || '') !== passcode) {
+    countWrongPasscode_();
+    return json_({ ok: false, error: 'Wrong passcode.' });
+  }
 
   const problem = validate_(data);
   if (problem) return json_({ ok: false, error: problem });
@@ -203,6 +211,21 @@ function underDailyLimit_() {
   if (count >= SETTINGS.MAX_MEETINGS_PER_DAY) return false;
   props.setProperty(key, String(count + 1));
   return true;
+}
+
+function wrongPasscodeKey_() {
+  return 'wrong_' + Utilities.formatDate(new Date(), SETTINGS.TIME_ZONE, 'yyyy-MM-dd');
+}
+
+function tooManyWrongPasscodes_() {
+  const count = Number(PropertiesService.getScriptProperties().getProperty(wrongPasscodeKey_()) || 0);
+  return count >= SETTINGS.MAX_WRONG_PASSCODES_PER_DAY;
+}
+
+function countWrongPasscode_() {
+  const props = PropertiesService.getScriptProperties();
+  const key = wrongPasscodeKey_();
+  props.setProperty(key, String(Number(props.getProperty(key) || 0) + 1));
 }
 
 function json_(obj) {

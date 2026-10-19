@@ -32,7 +32,7 @@ project:
 # Meeting scheduler on the Meetings page (Google Apps Script web app, see README).
 # Paste the web app URL that ends with /exec. Leave empty to hide the scheduler.
 scheduler:
-  endpoint: ""
+  endpoint: "https://script.google.com/macros/s/AKfycby43rjhDE3TkSrAejB6sSqZgu9UjFYRXyun0aCGL2ZLFnhIQAp1fD2GaXx2OdSd14NJ/exec"
 
 # Address of the published site.
 #   Organization site (repo named <org>.github.io): url: https://<org>.github.io  baseurl: ""
