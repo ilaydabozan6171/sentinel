@@ -1,0 +1,58 @@
+# ------------------------------------------------------------------
+#  Sentinel — project website settings
+#  The project text on the home page comes from this file.
+#  After saving, GitHub rebuilds the site in about a minute.
+# ------------------------------------------------------------------
+
+title: "Fund Surveillance Platform (FGP) Sentinel"
+description: >-
+  Sentinel senior design project: team, reports, meeting reports and source code.
+
+project:
+  name: "Fund Surveillance Platform (FGP) Sentinel"
+  short_name: "FGP Sentinel"       # used in the header on phones
+  team_id: ""                      # CS491 team ID once assigned; hidden from file titles
+  tagline: "Explainable early warnings for pension fund surveillance."
+
+  # One-paragraph description shown on the home page.
+  summary: >-
+    Sentinel is an early-warning assistant for the experts who oversee Turkey's
+    private pension funds. Today, unusual fund behaviour is caught mainly by fixed
+    rules, which miss activity that breaks no rule yet clearly stands out. Sentinel
+    learns what normal looks like for each fund from its own history and from similar
+    funds, sets aside moves the whole market made, and flags what remains with a risk
+    score that explains itself. Experts see which funds need attention first and why,
+    so their limited review time goes where it matters most.
+
+  course: "CS 491 / CS 492 Senior Design Project"
+  term: "2026–2027"
+  university: "Bilkent University, Department of Computer Engineering"
+  partner: "Pension Monitoring Center (EGM)"
+
+# Meeting scheduler on the Meetings page (Google Apps Script web app, see README).
+# Paste the web app URL that ends with /exec. Leave empty to hide the scheduler.
+scheduler:
+  endpoint: ""
+
+# Address of the published site.
+#   Organization site (repo named <org>.github.io): url: https://<org>.github.io  baseurl: ""
+#   Project site (any other repo name):             url: https://<org>.github.io  baseurl: "/<repo-name>"
+url: ""
+baseurl: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+
+defaults:
+  - scope:
+      path: ""
+    values:
+      layout: page
+
+exclude:
+  - README.md
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - .bundle

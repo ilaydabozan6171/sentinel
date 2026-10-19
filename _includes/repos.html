@@ -1,0 +1,13 @@
+<ul class="card-grid repo-grid">
+  {% for repo in site.data.repos %}
+  <li class="card repo">
+    <h3 class="repo-name">{{ repo.name }}</h3>
+    {% if repo.description %}<p>{{ repo.description }}</p>{% endif %}
+    {% if repo.url and repo.url != "" %}
+      <a class="repo-link" href="{{ repo.url }}">{{ repo.url | remove: "https://" | remove: "http://" }} ↗</a>
+    {% else %}
+      <span class="repo-link muted">Link coming soon</span>
+    {% endif %}
+  </li>
+  {% endfor %}
+</ul>

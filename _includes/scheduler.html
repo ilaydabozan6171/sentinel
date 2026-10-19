@@ -1,0 +1,108 @@
+{% comment %}
+  Meeting calendar: list of every meeting created through the website, and the form that
+  creates a new one (Google Meet link + email invitations). Backend: _apps-script/Code.gs.
+{% endcomment %}
+{% assign endpoint = site.scheduler.endpoint %}
+{% assign team_size = site.data.team.members | size %}
+
+<div class="calendar-grid" id="scheduler" data-endpoint="{{ endpoint }}" data-team-size="{{ team_size }}">
+
+  <section class="card area" aria-labelledby="all-meetings">
+    <div class="area-head">
+      <h3 id="all-meetings">All meetings</h3>
+      <span class="tag" data-meeting-count hidden></span>
+    </div>
+    <div data-meeting-list aria-live="polite">
+      {% if endpoint == "" %}
+        <p class="empty">The scheduler is not connected yet. Add its address under <code>scheduler.endpoint</code> in <code>_config.yml</code>.</p>
+      {% else %}
+        <p class="empty">Loading meetings…</p>
+      {% endif %}
+    </div>
+  </section>
+
+  <section class="card area" aria-labelledby="new-meeting">
+    <div class="area-head">
+      <h3 id="new-meeting">Schedule a meeting</h3>
+    </div>
+    <p class="form-intro">Creates a Google Meet link and emails the invitation to all {{ team_size }} team members and anyone you add.</p>
+
+    <form class="meeting-form" data-meeting-form novalidate>
+      <div class="field">
+        <label for="m-title">Title</label>
+        <input id="m-title" name="title" type="text" maxlength="120" required placeholder="e.g. Analysis report review">
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="m-type">Type</label>
+          <select id="m-type" name="type" required>
+            <option>Team</option>
+            <option>Supervisor</option>
+            <option>Instructor</option>
+            <option>EGM</option>
+            <option>Other</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="m-duration">Duration</label>
+          <select id="m-duration" name="duration">
+            <option value="30">30 min</option>
+            <option value="50" selected>50 min</option>
+            <option value="60">1 hour</option>
+            <option value="90">1.5 hours</option>
+            <option value="120">2 hours</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="m-date">Date</label>
+          <input id="m-date" name="date" type="date" required>
+        </div>
+        <div class="field">
+          <label for="m-time">Start time</label>
+          <input id="m-time" name="time" type="time" step="300" list="period-starts" required>
+          <datalist id="period-starts">
+            {% for p in site.data.availability.periods %}<option value="{{ p.time | split: '–' | first }}"></option>{% endfor %}
+          </datalist>
+        </div>
+      </div>
+      <p class="availability-hint" data-availability-hint hidden></p>
+
+      <div class="field">
+        <label for="m-by">Your name</label>
+        <input id="m-by" name="createdBy" type="text" maxlength="80" required autocomplete="name">
+      </div>
+
+      <fieldset class="field" data-quick-invites hidden>
+        <legend>Also invite</legend>
+        <div class="checks" data-quick-invite-list></div>
+      </fieldset>
+
+      <div class="field">
+        <label for="m-guests">Extra emails <span class="optional">optional</span></label>
+        <textarea id="m-guests" name="guests" rows="2" placeholder="name@bilkent.edu.tr, another@example.com"></textarea>
+        <p class="field-help">Separate with commas or new lines. Up to 10.</p>
+      </div>
+
+      <div class="field">
+        <label for="m-agenda">Agenda <span class="optional">optional</span></label>
+        <textarea id="m-agenda" name="agenda" rows="3" maxlength="2000"></textarea>
+      </div>
+
+      <div class="field">
+        <label for="m-pass">Passcode</label>
+        <input id="m-pass" name="passcode" type="password" required autocomplete="off">
+        <p class="field-help">Ask the team for the passcode. It keeps strangers from sending invitations.</p>
+      </div>
+
+      <button class="btn btn-primary" type="submit"{% if endpoint == "" %} disabled{% endif %}>Create meeting and send invitations</button>
+      <div class="form-result" data-form-result aria-live="polite" hidden></div>
+    </form>
+  </section>
+</div>
+
+<script type="application/json" id="availability-data">{{ site.data.availability | jsonify }}</script>
+<script src="{{ '/assets/js/scheduler.js' | relative_url }}?v={{ site.time | date: '%s' }}" defer></script>

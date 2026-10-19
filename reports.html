@@ -1,0 +1,37 @@
+---
+title: Reports
+layout: default
+permalink: /reports/
+intro: Every document we submit or produce, grouped by type. Newest files are listed first; click a file to open it.
+---
+<div class="container">
+  <header class="page-head">
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.intro }}</p>
+  </header>
+
+  <section class="section first" aria-labelledby="course-reports">
+    <h2 id="course-reports">Course reports</h2>
+    <div class="area-grid">
+      {% for r in site.data.documents.course_reports %}
+      <article class="card area" id="{{ r.folder }}">
+        <header class="area-head">
+          <h3>{{ r.title }}</h3>
+          {% if r.due %}<span class="tag">Due {{ r.due | date: "%d %b %Y" }}</span>{% endif %}
+        </header>
+        {% include file-list.html folder=r.folder latest=true %}
+      </article>
+      {% endfor %}
+    </div>
+  </section>
+
+  {% for a in site.data.documents.other %}
+  <section class="section" aria-labelledby="{{ a.folder }}">
+    <h2 id="{{ a.folder }}">{{ a.title }}</h2>
+    {% if a.description %}<p class="section-intro">{{ a.description }}</p>{% endif %}
+    <div class="card area">
+      {% include file-list.html folder=a.folder gallery=true %}
+    </div>
+  </section>
+  {% endfor %}
+</div>

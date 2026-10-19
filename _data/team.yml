@@ -1,0 +1,43 @@
+# Students. Delete or add entries as needed; the site adapts.
+#   student_id: shown under the name (delete the line to hide it)
+#   github:     username only (e.g. ilaydabozan)
+#   linkedin:   full profile URL
+#   photo:      square image in assets/img/team/ (leave empty to show initials)
+members:
+  - name: Melike Feyza Bahadırlı
+    student_id: "22201729"
+    role: ""
+    email: feyza.bahadirli@ug.bilkent.edu.tr
+    github: ""
+    linkedin: ""
+    photo: ""
+  - name: Ayşe Tayyibe Zehra Özkan
+    student_id: "22301879"
+    role: ""
+    email: tayyibe.ozkan@ug.bilkent.edu.tr
+    github: ""
+    linkedin: ""
+    photo: ""
+  - name: İlayda Bozan
+    student_id: "22102837"
+    role: ""
+    email: ilayda.bozan@ug.bilkent.edu.tr
+    github: ""
+    linkedin: ""
+    photo: ""
+  - name: Efe Erdoğmuş
+    student_id: "22203553"
+    role: ""
+    email: efe.erdogmus@ug.bilkent.edu.tr
+    github: ""
+    linkedin: ""
+    photo: ""
+
+# Supervisor and Innovation Expert (shown on the home and team pages).
+supervisors:
+  - name: Selim Aksoy
+    role: Supervisor
+    affiliation: Bilkent University
+  - name: Innovation Expert Name
+    role: Innovation Expert
+    affiliation: Pension Monitoring Center (EGM)

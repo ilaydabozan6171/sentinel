@@ -1,0 +1,57 @@
+---
+title: Team
+layout: default
+permalink: /team/
+intro: The students building Sentinel, and the people guiding the project.
+---
+<div class="container">
+  <header class="page-head">
+    <h1>{{ page.title }}</h1>
+    <p class="lead">{{ page.intro }}</p>
+  </header>
+
+  <section class="section first" aria-labelledby="members">
+    <h2 id="members">Members</h2>
+    <ul class="card-grid people">
+      {% for m in site.data.team.members %}
+      {% assign parts = m.name | split: " " %}
+      <li class="card person">
+        {% if m.photo and m.photo != "" %}
+          <img class="avatar" src="{{ m.photo | relative_url }}" alt="Photo of {{ m.name }}">
+        {% else %}
+          <span class="avatar" aria-hidden="true">{{ parts.first | slice: 0 }}{% if parts.size > 1 %}{{ parts.last | slice: 0 }}{% endif %}</span>
+        {% endif %}
+        <h3>{{ m.name }}</h3>
+        {% if m.student_id and m.student_id != "" %}<p class="person-id">{{ m.student_id }}</p>{% endif %}
+        {% if m.role and m.role != "" %}<p class="person-role">{{ m.role }}</p>{% endif %}
+        <div class="person-links">
+          {% if m.email and m.email != "" %}<a href="mailto:{{ m.email }}">{{ m.email }}</a>{% endif %}
+          {% if m.github and m.github != "" %}<a href="https://github.com/{{ m.github }}">GitHub</a>{% endif %}
+          {% if m.linkedin and m.linkedin != "" %}<a href="{{ m.linkedin }}">LinkedIn</a>{% endif %}
+        </div>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="supervision">
+    <h2 id="supervision">Supervisor and Innovation Expert</h2>
+    <ul class="card-grid people">
+      {% for s in site.data.team.supervisors %}
+      <li class="card person left">
+        <p class="eyebrow">{{ s.role }}</p>
+        <h3>{{ s.name }}</h3>
+        {% if s.affiliation %}<p class="person-role">{{ s.affiliation }}</p>{% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  {% if site.data.availability %}
+  <section class="section" aria-labelledby="availability">
+    <h2 id="availability">Weekly availability</h2>
+    <p class="section-intro">How many of us are free in each class period. We use it to schedule team and supervisor meetings.</p>
+    {% include availability.html %}
+  </section>
+  {% endif %}
+</div>

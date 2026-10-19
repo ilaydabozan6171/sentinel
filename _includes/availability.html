@@ -1,0 +1,41 @@
+{% comment %}
+  Weekly availability heatmap. Data: _data/availability.yml.
+  Colour level 0-4 is scaled to the team size, so it still works if the team changes.
+{% endcomment %}
+{% assign av = site.data.availability %}
+{% assign team_size = site.data.team.members | size %}
+
+<div class="card heat-card">
+  <div class="heat-legend" aria-hidden="true">
+    <span class="heat-legend-label">Members free</span>
+    {% for i in (0..team_size) %}
+      {% assign lvl = i | times: 4 | divided_by: team_size %}
+      <span class="heat-swatch lvl-{{ lvl }}">{{ i }}</span>
+    {% endfor %}
+  </div>
+
+  <div class="heat-scroll">
+    <table class="heat">
+      <caption class="sr-only">Number of team members free in each period, out of {{ team_size }}</caption>
+      <thead>
+        <tr>
+          <th scope="col">Period</th>
+          {% for d in av.days %}<th scope="col">{{ d }}</th>{% endfor %}
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in av.periods %}
+        {% assign t = p.time | split: "–" %}
+        <tr>
+          <th scope="row"><span class="t-start">{{ t[0] }}</span><span class="t-end">–{{ t[1] }}</span></th>
+          {% for n in p.free %}
+            {% assign lvl = n | times: 4 | divided_by: team_size %}
+            {% assign di = forloop.index0 %}
+            <td class="lvl-{{ lvl }}" data-value="{{ n }} of {{ team_size }} free" data-label="{{ av.day_names[di] }} · {{ p.time }}">{{ n }}</td>
+          {% endfor %}
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+</div>

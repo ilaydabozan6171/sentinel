@@ -1,0 +1,70 @@
+{% comment %}
+  Lists every file in documents/<include.folder>/, newest first (by the date in the file name).
+  Options: latest=true marks the newest file; gallery=true shows images as thumbnails.
+{% endcomment %}
+{% assign prefix = "/documents/" | append: include.folder | append: "/" %}
+{% assign files = site.static_files | where_exp: "f", "f.path contains prefix" %}
+{% assign image_exts = ".png .jpg .jpeg .gif .svg .webp" | split: " " %}
+
+{% if files.size == 0 %}
+  <p class="empty">{{ include.empty | default: "Not uploaded yet." }}</p>
+{% else %}
+
+  {% comment %} Sort by date read from the file name; undated files go last. {% endcomment %}
+  {% assign keys = "" %}
+  {% for f in files %}
+    {% include file-name.html file=f %}
+    {% if file_date == "" %}{% assign sort_date = "0000-00-00" %}{% else %}{% assign sort_date = file_date %}{% endif %}
+    {% assign keys = keys | append: sort_date | append: "|" | append: f.basename | append: "|" | append: f.path | append: "%%" %}
+  {% endfor %}
+  {% assign sorted_keys = keys | split: "%%" | sort | reverse %}
+
+  {% assign image_count = 0 %}
+  {% if include.gallery %}
+    {% for f in files %}
+      {% assign ext = f.extname | downcase %}
+      {% if image_exts contains ext %}{% assign image_count = image_count | plus: 1 %}{% endif %}
+    {% endfor %}
+  {% endif %}
+
+  {% if image_count > 0 %}
+  <div class="gallery">
+    {% for k in sorted_keys %}
+      {% assign p = k | split: "|" | last %}
+      {% assign f = site.static_files | where: "path", p | first %}
+      {% assign ext = f.extname | downcase %}
+      {% if image_exts contains ext %}
+        {% include file-name.html file=f %}
+        <a class="thumb" href="{{ f.path | relative_url }}">
+          <img src="{{ f.path | relative_url }}" alt="{{ file_title | escape }}" loading="lazy">
+          <span>{{ file_title }}{% if file_date != "" %} · {{ file_date | date: "%d %b %Y" }}{% endif %}</span>
+        </a>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% endif %}
+
+  <ul class="file-list">
+    {% assign shown = 0 %}
+    {% for k in sorted_keys %}
+      {% assign p = k | split: "|" | last %}
+      {% assign f = site.static_files | where: "path", p | first %}
+      {% assign ext = f.extname | downcase %}
+      {% if include.gallery and image_exts contains ext %}{% continue %}{% endif %}
+      {% include file-name.html file=f %}
+      <li>
+        <a class="file" href="{{ f.path | relative_url }}">
+          <span class="file-type">{{ ext | remove: "." | upcase }}</span>
+          <span class="file-name">{{ file_title }}</span>
+          <span class="file-meta">
+            {%- if include.latest and shown == 0 %}<span class="status ok">Latest</span>{% endif -%}
+            {%- if file_version != "" %}<span class="tag">{{ file_version }}</span>{% endif -%}
+            {%- if file_date != "" %}<time datetime="{{ file_date }}">{{ file_date | date: "%d %b %Y" }}</time>{% endif -%}
+          </span>
+        </a>
+      </li>
+      {% assign shown = shown | plus: 1 %}
+    {% endfor %}
+  </ul>
+
+{% endif %}

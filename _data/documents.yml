@@ -1,0 +1,30 @@
+# The areas on the Reports and Meetings pages.
+# Every file you put in documents/<folder>/ appears in that area automatically,
+# newest first. Name files like 2026-11-10-analysis-report.pdf so the date shows.
+#
+# You only need to edit this file to add a new area or set a due date.
+
+course_reports:
+  - title: Project Specification Report
+    folder: project-specification
+    due:                         # optional, e.g. 2026-11-10
+  - title: Analysis and Requirements Report
+    folder: analysis-requirements
+    due:
+  - title: Detailed Design Report
+    folder: detailed-design
+    due:
+  - title: Final Report
+    folder: final-report
+    due:
+
+other:
+  - title: Research and analysis
+    folder: research
+    description: Literature notes, data analyses, charts and figures.
+  - title: Presentations
+    folder: presentations
+    description: Slides and demo material.
+
+meetings:
+  folder: meeting-reports

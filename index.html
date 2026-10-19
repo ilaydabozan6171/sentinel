@@ -1,0 +1,79 @@
+---
+title: Home
+layout: default
+---
+{% assign supervisor = site.data.team.supervisors | where: "role", "Supervisor" | first %}
+{% assign expert = site.data.team.supervisors | where: "role", "Innovation Expert" | first %}
+
+{% assign uploaded = 0 %}
+{% for r in site.data.documents.course_reports %}
+  {% assign prefix = "/documents/" | append: r.folder | append: "/" %}
+  {% assign n = site.static_files | where_exp: "f", "f.path contains prefix" | size %}
+  {% if n > 0 %}{% assign uploaded = uploaded | plus: 1 %}{% endif %}
+{% endfor %}
+{% assign prefix = "/documents/" | append: site.data.documents.meetings.folder | append: "/" %}
+{% assign meeting_count = site.static_files | where_exp: "f", "f.path contains prefix" | size %}
+
+<section class="hero">
+  <div class="container">
+    <p class="eyebrow">{{ site.project.course }} · {{ site.project.term }}</p>
+    {% assign words = site.project.name | split: " " %}
+    <h1 class="hero-title">{% for w in words %}{% if forloop.last %}<span class="hero-title-key">{{ w }}</span>{% else %}{{ w }} {% endif %}{% endfor %}</h1>
+    <p class="hero-tagline">{{ site.project.tagline }}</p>
+    <p class="hero-summary">{{ site.project.summary }}</p>
+  </div>
+</section>
+
+<div class="container">
+
+  <dl class="facts">
+    {% if supervisor %}<div><dt>Supervisor</dt><dd>{{ supervisor.name }}</dd></div>{% endif %}
+    {% if expert %}<div><dt>Innovation Expert</dt><dd>{{ expert.name }}</dd></div>{% endif %}
+    {% if site.project.partner != "" %}<div><dt>Industry partner</dt><dd>{{ site.project.partner }}</dd></div>{% endif %}
+    <div><dt>University</dt><dd>{{ site.project.university }}</dd></div>
+  </dl>
+
+  <section class="section" aria-labelledby="team">
+    <div class="section-head">
+      <h2 id="team">Team</h2>
+      <a href="{{ '/team/' | relative_url }}">Contact details →</a>
+    </div>
+    <ul class="name-list">
+      {% for m in site.data.team.members %}
+      {% assign parts = m.name | split: " " %}
+      <li>
+        <span class="avatar small" aria-hidden="true">{{ parts.first | slice: 0 }}{% if parts.size > 1 %}{{ parts.last | slice: 0 }}{% endif %}</span>
+        <span>{{ m.name }}</span>
+      </li>
+      {% endfor %}
+    </ul>
+  </section>
+
+  <section class="section" aria-labelledby="work">
+    <h2 id="work">Our work</h2>
+    <ul class="link-cards">
+      <li>
+        <a class="card link-card" href="{{ '/reports/' | relative_url }}">
+          <span class="link-card-title">Reports</span>
+          <span class="link-card-text">Course reports, research and presentations, each in its own section.</span>
+          <span class="link-card-meta">{{ uploaded }} of {{ site.data.documents.course_reports | size }} course reports uploaded</span>
+        </a>
+      </li>
+      <li>
+        <a class="card link-card" href="{{ '/meetings/' | relative_url }}">
+          <span class="link-card-title">Meeting reports</span>
+          <span class="link-card-text">A report after every team, supervisor and EGM meeting.</span>
+          <span class="link-card-meta">{{ meeting_count }} meeting report{% if meeting_count != 1 %}s{% endif %}</span>
+        </a>
+      </li>
+      <li>
+        <a class="card link-card" href="{{ '/code/' | relative_url }}">
+          <span class="link-card-title">Source code</span>
+          <span class="link-card-text">GitHub repositories for the project.</span>
+          <span class="link-card-meta">{{ site.data.repos | size }} repositories</span>
+        </a>
+      </li>
+    </ul>
+  </section>
+
+</div>

@@ -1,0 +1,27 @@
+---
+title: Meetings
+layout: default
+permalink: /meetings/
+intro: Our report after every team, supervisor and EGM meeting, and the calendar of all our meetings this semester.
+---
+<div class="container">
+  <header class="page-head">
+    <h1>Meetings</h1>
+    <p class="lead">{{ page.intro }}</p>
+  </header>
+
+  <section class="section first" aria-labelledby="meeting-reports">
+    <h2 id="meeting-reports">Meeting reports</h2>
+    <div class="card area">
+      {% include file-list.html folder=site.data.documents.meetings.folder empty="No meeting reports yet." %}
+    </div>
+  </section>
+
+  {% comment %} The calendar shows on the live site only once the scheduler is connected. {% endcomment %}
+  {% if site.scheduler.endpoint != "" or jekyll.environment != "production" %}
+  <section class="section" aria-labelledby="calendar">
+    <h2 id="calendar">Meeting calendar</h2>
+    {% include scheduler.html %}
+  </section>
+  {% endif %}
+</div>

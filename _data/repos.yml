@@ -1,0 +1,12 @@
+# GitHub repositories. Leave `url` empty until the repo exists.
+- name: sentinel-website
+  description: Source of this website — reports, meeting minutes and research notes.
+  url: ""
+
+- name: sentinel-backend
+  description: Data pipeline, peer-group models, anomaly detectors, risk scoring and the API.
+  url: ""
+
+- name: sentinel-dashboard
+  description: Surveillance dashboard for expert users.
+  url: ""

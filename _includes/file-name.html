@@ -1,0 +1,59 @@
+{% comment %}
+  Turns a file name into a readable title, date and version. Understands both
+    2026-10-20-supervisor-meeting.pdf             -> "Supervisor meeting", 20 Oct 2026
+    TeamID_MeetingMinutesReport_1_08102026_v1.pdf -> "Meeting Minutes Report 1", 08 Oct 2026, v1
+  Sets file_title, file_date (YYYY-MM-DD or "") and file_version (or "").
+{% endcomment %}
+{% assign base = include.file.basename %}
+{% assign file_date = "" %}
+{% assign file_version = "" %}
+{% assign words = "" %}
+
+{% assign head = base | slice: 0, 10 %}
+{% assign d1 = head | slice: 4 %}
+{% assign d2 = head | slice: 7 %}
+{% if d1 == "-" and d2 == "-" %}
+  {% assign file_date = head %}
+  {% assign rest = base | slice: 11, 300 %}
+{% else %}
+  {% assign rest = base %}
+{% endif %}
+
+{% assign tokens = rest | replace: "-", "_" | replace: " ", "_" | split: "_" %}
+{% for t in tokens %}
+  {% if t == "" or t == "TeamID" or t == site.project.team_id %}{% continue %}{% endif %}
+  {% assign num = t | plus: 0 %}
+  {% assign first_char = t | slice: 0 | downcase %}
+  {% assign tail = t | slice: 1, 50 %}
+  {% assign tail_num = tail | plus: 0 | append: "" %}
+
+  {% if t.size == 8 and num > 1000000 and file_date == "" %}
+    {% assign century = t | slice: 0, 2 %}
+    {% if century == "19" or century == "20" %}
+      {% assign yyyy = t | slice: 0, 4 %}{% assign mm = t | slice: 4, 2 %}{% assign dd = t | slice: 6, 2 %}
+    {% else %}
+      {% assign dd = t | slice: 0, 2 %}{% assign mm = t | slice: 2, 2 %}{% assign yyyy = t | slice: 4, 4 %}
+    {% endif %}
+    {% assign file_date = yyyy | append: "-" | append: mm | append: "-" | append: dd %}
+  {% elsif first_char == "v" and tail != "" and tail_num == tail %}
+    {% assign file_version = "v" | append: tail %}
+  {% else %}
+    {% comment %} Split CamelCase words: MeetingMinutesReport -> Meeting Minutes Report {% endcomment %}
+    {% assign chars = t | split: "" %}
+    {% assign word = "" %}
+    {% assign prev_lower = false %}
+    {% for c in chars %}
+      {% assign up = c | upcase %}
+      {% assign low = c | downcase %}
+      {% if c == up and c != low and prev_lower %}{% assign word = word | append: " " %}{% endif %}
+      {% assign word = word | append: c %}
+      {% if c == low and c != up %}{% assign prev_lower = true %}{% else %}{% assign prev_lower = false %}{% endif %}
+    {% endfor %}
+    {% if words == "" %}{% assign words = word %}{% else %}{% assign words = words | append: " " | append: word %}{% endif %}
+  {% endif %}
+{% endfor %}
+
+{% if words == "" %}{% assign words = base %}{% endif %}
+{% assign first = words | slice: 0 | upcase %}
+{% assign rest_words = words | slice: 1, 300 %}
+{% assign file_title = first | append: rest_words %}
