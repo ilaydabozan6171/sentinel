@@ -88,6 +88,10 @@
     fetch(endpoint + "?action=config")
       .then(function (r) { return r.json(); })
       .then(function (data) {
+        if (data && data.needsPasscode) {
+          root.querySelector("[data-passcode-field]").hidden = false;
+          F.passcode.required = true;
+        }
         var options = (data && data.quickInvites) || [];
         if (!options.length) return;
         var box = root.querySelector("[data-quick-invite-list]");

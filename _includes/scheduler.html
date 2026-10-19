@@ -92,10 +92,11 @@
         <textarea id="m-agenda" name="agenda" rows="3" maxlength="2000"></textarea>
       </div>
 
-      <div class="field">
+      {% comment %} Shown only when the script has a passcode set (see _apps-script/Code.gs). {% endcomment %}
+      <div class="field" data-passcode-field hidden>
         <label for="m-pass">Passcode</label>
-        <input id="m-pass" name="passcode" type="password" required autocomplete="off">
-        <p class="field-help">Ask the team for the passcode. It keeps strangers from sending invitations.</p>
+        <input id="m-pass" name="passcode" type="password" autocomplete="off">
+        <p class="field-help">Ask the team for the passcode.</p>
       </div>
 
       <button class="btn btn-primary" type="submit"{% if endpoint == "" %} disabled{% endif %}>Create meeting and send invitations</button>

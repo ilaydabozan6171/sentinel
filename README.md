@@ -52,7 +52,7 @@ Meetings sayfasındaki form ekip üyelerinin ve hocaların toplantı oluşturmas
 - davet **4 ekip üyesine**, işaretlenen hocalara ve forma yazılan ekstra e-postalara mail olarak gider,
 - toplantı sayfadaki "All meetings" listesine eklenir. Böylece dönem boyunca yapılan tüm toplantılar orada görünür.
 
-> **Şu anki kurulum:** planlayıcı `ilaydabozan90@gmail.com` hesabında "Sentinel scheduler" adıyla çalışıyor; toplantılar o hesabın Google Takvim'inde oluşur. Şifre yalnızca İlayda'nın bilgisayarındaki `_apps-script/secret.gs` dosyasında ve Google'daki projede durur; repoya girmez. Kodu değiştirince yeniden yüklemek için `_apps-script` klasöründe `clasp push` ve `clasp create-deployment --deploymentId <mevcut-id>` komutları yeterli (clasp: Google'ın komut satırı aracı).
+> **Şu anki kurulum:** planlayıcı `ilaydabozan90@gmail.com` hesabında "Sentinel scheduler" adıyla çalışıyor; toplantılar o hesabın Google Takvim'inde oluşur. Form **şifresiz**: siteyi açan herkes toplantı oluşturabilir, günde en fazla 20 toplantı. Kötüye kullanım görürseniz aşağıdaki 5. adımla şifre ekleyin; şifre eklenince formda şifre kutusu kendiliğinden çıkar. Kodu değiştirince yeniden yüklemek için `_apps-script` klasöründe `clasp push` ve `clasp create-deployment --deploymentId <mevcut-id>` komutları yeterli (clasp: Google'ın komut satırı aracı).
 
 Arka planda `_apps-script/Code.gs` çalışır. Bu kod ücretsiz bir Google Apps Script'tir ve sizin Google hesabınızda çalışır. Kurulum bir kez yapılır, yaklaşık 10 dakika sürer:
 
@@ -60,7 +60,7 @@ Arka planda `_apps-script/Code.gs` çalışır. Bu kod ücretsiz bir Google Apps
 2. Bu hesapla <https://script.google.com> adresine girin → **New project**. Projeye "Sentinel scheduler" adını verin.
 3. Editördeki `Code.gs` içeriğini silin ve bu repodaki `_apps-script/Code.gs` dosyasının içeriğini yapıştırın.
 4. **Project Settings** (dişli simgesi) → **Show "appsscript.json" manifest file in editor** kutusunu işaretleyin. Editörde açılan `appsscript.json` dosyasına bu repodaki `_apps-script/appsscript.json` içeriğini yapıştırın. Bu adım Google Calendar servisini açar.
-5. **Şifreyi ayarlayın:** `_apps-script/secret.example.gs` dosyasını `secret.gs` adıyla kopyalayıp şifreyi yazın ve projeye ekleyin, ya da **Project Settings → Script Properties → Add script property** ile `PASSCODE` adında ekleyin. Formu kullanabilmek için bu şifre gerekir; hocalara da verin. Şifre public repoya girmez.
+5. **Şifre (isteğe bağlı):** form şifresiz de çalışır. Şifre isterseniz `_apps-script/secret.example.gs` dosyasını `secret.gs` adıyla kopyalayıp şifreyi yazın ve projeye ekleyin, ya da **Project Settings → Script Properties → Add script property** ile `PASSCODE` adında ekleyin. Şifre public repoya girmez.
 6. **Deploy → New deployment →** tür: **Web app**, Execute as: **Me**, Who has access: **Anyone** → **Deploy**. Google izin isteyecek; onaylayın. "Google hasn't verified this app" uyarısı çıkarsa **Advanced → Go to Sentinel scheduler** deyin. Uyarı, kodu kendiniz yazdığınız için çıkar.
 7. Çıkan **Web app URL**'sini (sonu `/exec` ile biter) kopyalayın ve `_config.yml` içinde `scheduler.endpoint` alanına yapıştırın. Değişikliği gönderin; takvim Meetings sayfasında görünür.
 

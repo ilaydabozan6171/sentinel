@@ -8,8 +8,9 @@
  *                           and emails the invitation to the team and any guests
  *
  * Setup steps are in the README (section "Toplantı planlayıcı").
- * The passcode is NOT stored in this file. It comes from secret.gs (not in the public repo,
- * see secret.example.gs) or from Project Settings -> Script Properties -> PASSCODE.
+ * A passcode is optional. To require one, add secret.gs (not in the public repo, see
+ * secret.example.gs) or set Project Settings -> Script Properties -> PASSCODE.
+ * Without one, anyone with the website can create meetings (still capped per day).
  */
 
 const SETTINGS = {
@@ -63,13 +64,14 @@ function doPost(e) {
 
   const passcode = (typeof SCHEDULER_PASSCODE === 'string' && SCHEDULER_PASSCODE) ||
     PropertiesService.getScriptProperties().getProperty('PASSCODE');
-  if (!passcode) return json_({ ok: false, error: 'The scheduler has no passcode set yet.' });
-  if (tooManyWrongPasscodes_()) {
-    return json_({ ok: false, error: 'Too many wrong passcodes today. Please try again tomorrow.' });
-  }
-  if (String(data.passcode || '') !== passcode) {
-    countWrongPasscode_();
-    return json_({ ok: false, error: 'Wrong passcode.' });
+  if (passcode) {
+    if (tooManyWrongPasscodes_()) {
+      return json_({ ok: false, error: 'Too many wrong passcodes today. Please try again tomorrow.' });
+    }
+    if (String(data.passcode || '') !== passcode) {
+      countWrongPasscode_();
+      return json_({ ok: false, error: 'Wrong passcode.' });
+    }
   }
 
   const problem = validate_(data);
@@ -93,6 +95,8 @@ function getConfig_() {
     types: SETTINGS.MEETING_TYPES,
     quickInvites: SETTINGS.QUICK_INVITES.map(function (q) { return { id: q.id, label: q.label }; }),
     maxGuests: SETTINGS.MAX_GUESTS,
+    needsPasscode: Boolean((typeof SCHEDULER_PASSCODE === 'string' && SCHEDULER_PASSCODE) ||
+      PropertiesService.getScriptProperties().getProperty('PASSCODE')),
   };
 }
 
