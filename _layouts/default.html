@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{% if page.title and page.url != "/" %}{{ page.title }} · {% endif %}{{ site.title }}</title>
   <meta name="description" content="{{ page.intro | default: site.description | strip_html | normalize_whitespace | escape }}">
-  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/icon-32.png' | relative_url }}">
-  <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}">
+  <link rel="icon" type="image/png" sizes="32x32" href="{{ '/assets/img/icon-32.png' | relative_url }}?v={{ site.time | date: '%s' }}">
+  <link rel="apple-touch-icon" href="{{ '/assets/img/apple-touch-icon.png' | relative_url }}?v={{ site.time | date: '%s' }}">
   <meta name="theme-color" content="#08142a">
   <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}?v={{ site.time | date: '%s' }}">
 </head>
@@ -16,7 +16,7 @@
   <header class="site-header">
     <div class="container header-inner">
       <a class="brand" href="{{ '/' | relative_url }}" aria-label="{{ site.project.name }} home">
-        <img class="brand-mark" src="{{ '/assets/img/icon-64.png' | relative_url }}" alt="" width="32" height="32">
+        <img class="brand-mark" src="{{ '/assets/img/icon-64.png' | relative_url }}?v={{ site.time | date: '%s' }}" alt="" width="32" height="32">
         <span>{{ site.project.name }}</span>
       </a>
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav">
