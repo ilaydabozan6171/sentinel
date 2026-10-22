@@ -29,19 +29,38 @@
         var normal = voices.filter(function (v) { return !NOVELTY.test(v.name); });
         return normal.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] || normal[0] || null;
       };
-      window.speechSynthesis.getVoices(); // some browsers load the voice list on first call
-      sayBtn.addEventListener("click", function () {
-        var utterance = new SpeechSynthesisUtterance(sayBtn.dataset.say);
-        utterance.lang = "en-US";
+      // Chrome fills the voice list a moment after the page loads. Wait for it rather than
+      // speaking with the default voice, which on a Turkish computer would be Turkish.
+      var withEnglishVoice = function (callback) {
         var voice = englishVoice();
-        if (voice) utterance.voice = voice;
-        utterance.rate = 0.85;
-        var done = function () { sayBtn.classList.remove("playing"); };
-        utterance.onend = done;
-        utterance.onerror = done;
-        sayBtn.classList.add("playing");
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
+        if (voice || window.speechSynthesis.getVoices().length) return callback(voice);
+        var finished = false;
+        var finish = function () {
+          if (finished) return;
+          finished = true;
+          callback(englishVoice());
+        };
+        window.speechSynthesis.addEventListener("voiceschanged", finish);
+        setTimeout(finish, 2000);
+      };
+
+      // No English voice on this device: hide the button instead of reading the name in another language.
+      withEnglishVoice(function (voice) { if (!voice) sayBtn.hidden = true; });
+
+      sayBtn.addEventListener("click", function () {
+        withEnglishVoice(function (voice) {
+          if (!voice) { sayBtn.hidden = true; return; }
+          var utterance = new SpeechSynthesisUtterance(sayBtn.dataset.say);
+          utterance.voice = voice;
+          utterance.lang = voice.lang;
+          utterance.rate = 0.85;
+          var done = function () { sayBtn.classList.remove("playing"); };
+          utterance.onend = done;
+          utterance.onerror = done;
+          sayBtn.classList.add("playing");
+          window.speechSynthesis.cancel();
+          window.speechSynthesis.speak(utterance);
+        });
       });
     }
   }
