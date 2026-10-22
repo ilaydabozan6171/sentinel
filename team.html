@@ -41,7 +41,7 @@ intro: The students building Sentinel, and the people guiding the project.
       <li class="card person left">
         <p class="eyebrow">{{ s.role }}</p>
         <h3>{{ s.name }}</h3>
-        {% if s.affiliation %}<p class="person-role">{{ s.affiliation }}</p>{% endif %}
+        {% if s.affiliation and s.affiliation != "" %}<p class="person-role">{{ s.affiliation }}</p>{% endif %}
       </li>
       {% endfor %}
     </ul>

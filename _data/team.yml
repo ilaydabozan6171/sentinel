@@ -38,6 +38,6 @@ supervisors:
   - name: Selim Aksoy
     role: Supervisor
     affiliation: Bilkent University
-  - name: Innovation Expert Name
+  - name: Abdullah Sönmez
     role: Innovation Expert
-    affiliation: Pension Monitoring Center (EGM)
+    affiliation: ""
