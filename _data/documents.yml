@@ -5,6 +5,9 @@
 # You only need to edit this file to add a new area or set a due date.
 
 course_reports:
+  - title: Assessment of Innovation Form
+    folder: innovation-assessment
+    due:
   - title: Project Specification Report
     folder: project-specification
     due:                         # optional, e.g. 2026-11-10

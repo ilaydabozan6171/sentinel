@@ -10,6 +10,7 @@ Dosyayı ilgili klasöre atın, gerisini site halleder. Kod veya ayar değiştir
 
 | Ne yüklüyorsunuz? | Hangi klasöre? | Sitede nerede görünür? |
 |---|---|---|
+| Assessment of Innovation Form | `documents/innovation-assessment/` | Reports |
 | Project Specification Report | `documents/project-specification/` | Reports |
 | Analysis and Requirements Report | `documents/analysis-requirements/` | Reports |
 | Detailed Design Report | `documents/detailed-design/` | Reports |
