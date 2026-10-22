@@ -4,15 +4,16 @@
 #  After saving, GitHub rebuilds the site in about a minute.
 # ------------------------------------------------------------------
 
-title: "Fund Surveillance Platform (FGP) Sentinel"
+title: "Sentinel"
 description: >-
-  Sentinel senior design project: team, reports, meeting reports and source code.
+  Sentinel (Surveillance, Explainability, and Novelty Tracking in INvestment and Equity Limits):
+  senior design project website with the team, reports, meeting reports and source code.
 
 project:
-  name: "Fund Surveillance Platform (FGP) Sentinel"
-  short_name: "FGP Sentinel"       # used in the header on phones
+  name: "Sentinel"
+  # What the name stands for. Letters between ** ** are highlighted on the home page.
+  expansion: "**S**urveillance, **E**xplainability, and **N**ovelty **T**racking in **IN**vestment and **E**quity **L**imits"
   team_id: ""                      # CS491 team ID once assigned; hidden from file titles
-  tagline: "Explainable early warnings for pension fund surveillance."
 
   # One-paragraph description shown on the home page.
   summary: >-

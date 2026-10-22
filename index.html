@@ -17,9 +17,8 @@ layout: default
 <section class="hero">
   <div class="container">
     <p class="eyebrow">{{ site.project.course }} · {{ site.project.term }}</p>
-    {% assign words = site.project.name | split: " " %}
-    <h1 class="hero-title">{% for w in words %}{% if forloop.last %}<span class="hero-title-key">{{ w }}</span>{% else %}{{ w }} {% endif %}{% endfor %}</h1>
-    <p class="hero-tagline">{{ site.project.tagline }}</p>
+    <h1 class="hero-title">{{ site.project.name }}</h1>
+    {% if site.project.expansion %}<p class="hero-expansion">{{ site.project.expansion | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>{% endif %}
     <p class="hero-summary">{{ site.project.summary }}</p>
   </div>
 </section>

@@ -114,7 +114,6 @@ img { max-width: 100%; height: auto; }
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--text); text-decoration: none; }
 .brand:hover { color: var(--text); }
 .brand-mark { width: 28px; height: 28px; flex: none; }
-.brand-short { display: none; }
 .brand-mark rect { fill: var(--accent); }
 .brand-mark circle:first-of-type { fill: none; stroke: var(--on-accent); stroke-width: 2.5; }
 .brand-mark circle:last-of-type { fill: var(--on-accent); }
@@ -133,9 +132,9 @@ img { max-width: 100%; height: auto; }
   padding: 72px 0 56px; border-bottom: 1px solid var(--border);
   background: radial-gradient(900px 320px at 85% -10%, var(--accent-soft), transparent 70%);
 }
-.hero-title { font-size: clamp(2rem, 5vw, 3.2rem); font-weight: 800; letter-spacing: -0.025em; }
-.hero-title-key { display: block; color: var(--accent); }
-.hero-tagline { margin: 12px 0 0; font-size: 1.2rem; font-weight: 500; color: var(--muted); }
+.hero-title { font-size: clamp(2.8rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; }
+.hero-expansion { margin: 8px 0 0; max-width: 44rem; font-size: 1.2rem; font-weight: 500; color: var(--muted); }
+.hero-expansion strong { color: var(--accent); font-weight: 800; }
 .hero-summary { margin: 28px 0 0; max-width: 44rem; font-size: 1.1rem; line-height: 1.7; }
 
 
@@ -353,8 +352,6 @@ img { max-width: 100%; height: auto; }
   .container { padding: 0 16px; }
   .footer-inner { padding: 24px 16px 32px; }
   .nav-toggle { display: block; }
-  .brand-full { display: none; }
-  .brand-short { display: inline; }
   .site-nav {
     display: none; position: absolute; top: 60px; left: 0; right: 0;
     flex-direction: column; gap: 2px; padding: 8px 16px 14px;

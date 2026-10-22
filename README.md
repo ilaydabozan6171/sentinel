@@ -1,4 +1,6 @@
-# Fund Surveillance Platform (FGP) Sentinel: Proje Web Sitesi
+# Sentinel: Proje Web Sitesi
+
+**S**urveillance, **E**xplainability, and **N**ovelty **T**racking in **IN**vestment and **E**quity **L**imits
 
 Hocaların projemizi anlayıp bizi tanıdığı, raporlarımıza ulaştığı site. GitHub Pages üzerinde çalışır.
 
@@ -36,7 +38,7 @@ Bir dosyayı kaldırmak için GitHub'da dosyayı açıp **Delete file** deyin.
 
 | Ne? | Hangi dosya? |
 |---|---|
-| Proje adı, tek cümlelik slogan, tek paragraflık açıklama | `_config.yml` |
+| Proje adı, açılımı, tek paragraflık açıklama | `_config.yml` |
 | Ekip üyeleri, Supervisor, Innovation Expert | `_data/team.yml` |
 | Haftalık müsaitlik tablosu (Team sayfası) | `_data/availability.yml` |
 | GitHub repo linkleri | `_data/repos.yml` |
