@@ -17,7 +17,12 @@ layout: default
 <section class="hero">
   <div class="container">
     <p class="eyebrow">{{ site.project.course }} · {{ site.project.term }}</p>
-    <h1 class="hero-title">{{ site.project.name }}</h1>
+    <div class="hero-name">
+      <h1 class="hero-title">{{ site.project.name }}</h1>
+      <button type="button" class="say-btn" data-say="{{ site.project.name }}" aria-label="Hear how to pronounce {{ site.project.name }}" title="Pronunciation">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9.5v5h3.5L12 19V5L7.5 9.5H4z"/><path class="wave" d="M15.5 8.5a5 5 0 0 1 0 7M18 6a8.5 8.5 0 0 1 0 12"/></svg>
+      </button>
+    </div>
     {% if site.project.expansion %}<p class="hero-expansion">{{ site.project.expansion | markdownify | remove: "<p>" | remove: "</p>" | strip }}</p>{% endif %}
     <p class="hero-summary">{{ site.project.summary }}</p>
   </div>

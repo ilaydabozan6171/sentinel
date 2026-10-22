@@ -9,6 +9,43 @@
     });
   }
 
+  // Project name pronunciation, always read with an English voice
+  var sayBtn = document.querySelector(".say-btn");
+  if (sayBtn) {
+    if (!("speechSynthesis" in window)) {
+      sayBtn.hidden = true;
+    } else {
+      // Natural-sounding voices first; macOS also ships joke voices (Albert, Zarvox, ...) to skip.
+      var PREFERRED = ["Samantha", "Google US English", "Microsoft Aria", "Microsoft Jenny", "Microsoft Zira",
+        "Microsoft Guy", "Microsoft David", "Alex", "Ava", "Allison", "Susan", "Tom", "Daniel", "Karen", "Moira"];
+      var NOVELTY = /^(Albert|Bad News|Bahh|Bells|Boing|Bubbles|Cellos|Good News|Jester|Organ|Superstar|Trinoids|Whisper|Wobble|Zarvox|Fred|Junior|Kathy|Ralph|Eddy|Flo|Grandma|Grandpa|Reed|Rocko|Sandy|Shelley|İyi Haber|Kötü Haber|Org)\b/i;
+      var englishVoice = function () {
+        var voices = window.speechSynthesis.getVoices().filter(function (v) { return /^en/i.test(v.lang); });
+        for (var i = 0; i < PREFERRED.length; i++) {
+          for (var j = 0; j < voices.length; j++) {
+            if (voices[j].name.indexOf(PREFERRED[i]) === 0) return voices[j];
+          }
+        }
+        var normal = voices.filter(function (v) { return !NOVELTY.test(v.name); });
+        return normal.filter(function (v) { return /^en[-_]US/i.test(v.lang); })[0] || normal[0] || null;
+      };
+      window.speechSynthesis.getVoices(); // some browsers load the voice list on first call
+      sayBtn.addEventListener("click", function () {
+        var utterance = new SpeechSynthesisUtterance(sayBtn.dataset.say);
+        utterance.lang = "en-US";
+        var voice = englishVoice();
+        if (voice) utterance.voice = voice;
+        utterance.rate = 0.85;
+        var done = function () { sayBtn.classList.remove("playing"); };
+        utterance.onend = done;
+        utterance.onerror = done;
+        sayBtn.classList.add("playing");
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+      });
+    }
+  }
+
   // Availability heatmap: show day, period and value when hovering a cell
   var cells = document.querySelectorAll(".heat td[data-value]");
   if (cells.length) {
