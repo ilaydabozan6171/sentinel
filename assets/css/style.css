@@ -4,14 +4,14 @@
    ------------------------------------------------------------------ */
 
 :root {
-  /* Brand colours taken from the Sentinel icon: deep navy, teal glow, a touch of gold. */
+  /* Brand colours taken from the Sentinel icon: deep navy, teal line art and an orange spark. */
   --brand-bg: #08142a;
   --brand-bg-2: #0e2444;
   --brand-text: #f1f6fd;
   --brand-muted: #a7b9d1;
   --brand-line: rgba(255, 255, 255, 0.08);
   --brand-cyan: #5fd0da;
-  --brand-gold: #e8b65c;
+  --brand-orange: #f8a820;
 
   --bg: #f3f6fa;
   --surface: #ffffff;
@@ -122,7 +122,7 @@ img { max-width: 100%; height: auto; }
 
 .brand { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; font-size: 1.05rem; color: var(--brand-text); text-decoration: none; }
 .brand:hover { color: var(--brand-text); }
-.brand-mark { width: 32px; height: 32px; flex: none; }
+.brand-mark { width: 32px; height: 32px; flex: none; border-radius: 17%; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.12); }
 
 .site-nav { display: flex; gap: 4px; }
 .site-nav a { color: var(--brand-muted); text-decoration: none; font-weight: 500; font-size: 0.95rem; padding: 6px 12px; border-radius: 8px; }
@@ -139,12 +139,12 @@ img { max-width: 100%; height: auto; }
   padding: 64px 0 56px; color: var(--brand-text);
   background:
     radial-gradient(700px 360px at 88% 0%, rgba(95, 208, 218, 0.22), transparent 70%),
-    radial-gradient(420px 260px at 8% 100%, rgba(232, 182, 92, 0.10), transparent 70%),
+    radial-gradient(420px 260px at 8% 100%, rgba(248, 168, 32, 0.10), transparent 70%),
     linear-gradient(180deg, var(--brand-bg) 0%, var(--brand-bg-2) 100%);
 }
-.hero .eyebrow { color: var(--brand-gold); }
+.hero .eyebrow { color: var(--brand-orange); }
 .hero-brand { display: flex; align-items: center; gap: 28px; }
-.hero-logo { flex: none; width: 128px; height: 128px; filter: drop-shadow(0 10px 30px rgba(95, 208, 218, 0.25)); }
+.hero-logo { flex: none; width: 128px; height: 128px; border-radius: 17%; box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.10), 0 14px 36px rgba(0, 0, 0, 0.35); }
 .hero-name { display: flex; align-items: center; gap: 14px; }
 .hero-title { font-size: clamp(2.8rem, 7vw, 4.2rem); font-weight: 800; letter-spacing: -0.03em; }
 
